@@ -12,14 +12,8 @@
 </head>
 <body>
 	<div class="center-content">
-		<h1 class="logo" style="background-image:url(${pageContext.request.contextPath}/assets/images/logo.jpg)">JBlog</h1>
-		<ul class="menu">
-			<li><a href="">로그인</a></li>
-			<li><a href="">회원가입</a></li>
-			<li><a href="">로그아웃</a></li>
-			<li><a href="">내블로그</a></li>
-		</ul>
-		<form class="login-form">
+		<c:import url="/WEB-INF/views/includes/header.jsp" />
+		<form class="login-form" method="post" action="${pageContext.request.contextPath}/user/auth">
       		<label>아이디</label> <input type="text" name="id">
       		<label>패스워드</label> <input type="text" name="password">
       		<input type="submit" value="로그인">

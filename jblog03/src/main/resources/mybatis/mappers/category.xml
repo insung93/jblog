@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category"> <!-- 이거 실행시킬 때 guestbook.findAll 이런식으로 함, 그래야 findAll이라는 id가 많아도 겹치지 않음 -->
+	<insert id="insert" parameterType="string">
+		<![CDATA[
+			insert into category values(null,'기본','기본',now(),#{id})
+		]]>
+	</insert>
+	<select id="findCategory" parameterType="string" resultType="categoryvo">
+		<![CDATA[
+			select no, name, category.desc, date_format(reg_date,'%Y/%m/%d') regDate, blog_id blogId from category where blog_id = #{id } 
+		]]>
+	</select>
+	<select id="firstCategory" parameterType="string" resultType="categoryvo">
+		<![CDATA[
+			select * from category where blog_id = #{id } limit 1;  
+		]]>
+	</select>
+	<insert id="addCategory" parameterType="categoryvo" >
+		<![CDATA[
+			insert into category values(null, #{name }, #{desc }, now(), #{blogId })
+		]]>
+	</insert>
+	<select id="findCount" resultType="categoryvo" parameterType="string">
+		<![CDATA[
+			select a.no ,a.name ,a.desc, if(count is null , 0 , count) count 
+			from ( 
+							select c1.no,c1.name,c1.desc from category c1 where c1.blog_id = #{id }) as a
+			left outer join (	
+							select p.category_no, count(*) count from post p group by p.category_no) as b on a.no = b.category_no ; 
+		]]>
+	</select>
+	<delete id="deleteCategory" parameterType="int">
+		<![CDATA[
+			delete from category where no = #{no };
+		]]>
+	</delete>
+</mapper>

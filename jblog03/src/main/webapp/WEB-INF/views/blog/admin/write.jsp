@@ -11,50 +11,51 @@
 </head>
 <body>
 	<div id="container">
-		<div id="header">
-			<h1>Spring 이야기</h1>
-			<ul>
-				<li><a href="">로그인</a></li>
-				<li><a href="">로그아웃</a></li>
-				<li><a href="">블로그 관리</a></li>
-			</ul>
-		</div>
+		<c:import url="/WEB-INF/views/includes/header_admin.jsp" />
 		<div id="wrapper">
 			<div id="content" class="full-screen">
 				<ul class="admin-menu">
-					<li><a href="">기본설정</a></li>
-					<li><a href="">카테고리</a></li>
-					<li class="selected">글작성</li>
+					<li><a href="${pageContext.request.contextPath}/${authUser.id}/admin/basic">기본설정</a></li>
+					<li><a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리</a></li>
+					<li class="selected"><a href="${pageContext.request.contextPath}/${authUser.id}/admin/write">글작성</a></li>
 				</ul>
-				<form action="" method="post">
-			      	<table class="admin-cat-write">
-			      		<tr>
-			      			<td class="t">제목</td>
-			      			<td>
-			      				<input type="text" size="60" name="title">
-				      			<select name="category">
-				      				<option>미분류</option>
-				      				<option>자바</option>
-				      			</select>
-				      		</td>
-			      		</tr>
-			      		<tr>
-			      			<td class="t">내용</td>
-			      			<td><textarea name="content"></textarea></td>
-			      		</tr>
-			      		<tr>
-			      			<td>&nbsp;</td>
-			      			<td class="s"><input type="submit" value="포스트하기"></td>
-			      		</tr>
-			      	</table>
-				</form>
+				
+				<c:choose>
+					<c:when test="${empty categoryList }">
+						<p align="center">
+							카테고리를 추가 해주세요<br><br>
+							<a href="${pageContext.request.contextPath}/${authUser.id}/admin/category">카테고리 추가하기</a>
+						</p>
+					</c:when>
+					<c:otherwise>
+						<form action="${pageContext.request.contextPath}/${authUser.id}/admin/write" method="post">
+					      	<table class="admin-cat-write">
+					      		<tr>
+					      			<td class="t">제목</td>
+					      			<td>
+					      				<input type="text" size="60" name="title">
+						      			<select name="categoryNo">
+						      				<c:forEach var="category" items="${categoryList }">
+							      				<option value="${category.no }">${category.name }</option>
+						      				</c:forEach>
+						      			</select>
+						      		</td>
+					      		</tr>
+					      		<tr>
+					      			<td class="t">내용</td>
+					      			<td><textarea name="contents"></textarea></td>
+					      		</tr>
+					      		<tr>
+					      			<td>&nbsp;</td>
+					      			<td class="s"><input type="submit" value="포스트하기"></td>
+					      		</tr>
+					      	</table>
+						</form>
+					</c:otherwise>
+				</c:choose>
 			</div>
 		</div>
-		<div id="footer">
-			<p>
-				<strong>Spring 이야기</strong> is powered by JBlog (c)2016
-			</p>
-		</div>
+		<c:import url="/WEB-INF/views/includes/footer_admin.jsp" />
 	</div>
 </body>
 </html>
