@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post"> <!-- 이거 실행시킬 때 guestbook.findAll 이런식으로 함, 그래야 findAll이라는 id가 많아도 겹치지 않음 -->
+	<select id="findPostList" parameterType="long" resultType="postvo">
+		<![CDATA[
+			select no, title, contents, date_format(reg_date,'%Y/%m/%d') regDate, category_no categoryNo from post where category_no = #{categoryNo}
+		]]>	
+	</select>
+	<select id="firstPost" parameterType="long" resultType="postvo">
+		<![CDATA[
+			select no, title, contents, date_format(reg_date,'%Y/%m/%d') regDate, category_no categoryNo from post where category_no = #{categoryNo} limit 1;
+		]]>	
+	</select>
+	<select id="findPostOne" parameterType="int" resultType="postvo">
+		<![CDATA[
+			select no, title, contents, date_format(reg_date,'%Y/%m/%d') regDate, category_no categoryNo from post where no = #{postNo};
+		]]>	
+	</select>
+	<insert id="addPost" parameterType="postvo">
+		<![CDATA[
+			insert into post values(null, #{title }, #{contents }, now(), #{categoryNo })
+		]]>	
+	</insert>
+	<delete id="deletePost" parameterType="int">
+		<![CDATA[
+			delete from post where category_no = #{no}
+		]]>
+	</delete>
+</mapper>

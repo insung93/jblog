@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user"> <!-- 이거 실행시킬 때 guestbook.findAll 이런식으로 함, 그래야 findAll이라는 id가 많아도 겹치지 않음 -->
+	<insert id="insert" parameterType="uservo">
+		<![CDATA[
+			insert into user values(#{id},#{name},#{password},now())
+		]]>
+	</insert>
+	<select id="findByIdandPassword" parameterType="uservo" resultType="uservo">
+		<![CDATA[
+			select id,name,password,join_date joinDate from user where id= #{id} and password=#{password}
+		]]>
+	</select>
+	<select id="getUser" parameterType="string" resultType="uservo">
+		<![CDATA[
+			select id, name from user where id = #{id }
+		]]>
+	</select>
+	<select id="getAuth" parameterType="map" resultType="uservo">
+		<![CDATA[
+			select id from user where id = #{id } and password = #{password }
+		]]>
+	</select>
+</mapper>

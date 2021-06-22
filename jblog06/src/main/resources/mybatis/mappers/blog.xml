@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog"> <!-- 이거 실행시킬 때 guestbook.findAll 이런식으로 함, 그래야 findAll이라는 id가 많아도 겹치지 않음 -->
+	<insert id="insert" parameterType="string">
+		<![CDATA[
+			insert into blog values(#{id},concat(#{id},"'s Blog"),'/assets/images/profile.jpg')
+		]]>
+	</insert>
+	<select id="findBlog" parameterType="string" resultType="blogvo">
+		<![CDATA[
+			select id, title, logo from blog where id = #{ id }
+		]]>	
+	</select>
+	<update id="update" parameterType="blogvo">
+		<![CDATA[
+			update blog set title=#{title} , logo=#{logo} where id = #{id }
+		]]>
+	</update>
+</mapper>
