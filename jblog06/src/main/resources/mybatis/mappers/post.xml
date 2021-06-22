@@ -12,7 +12,7 @@
 			select no, title, contents, date_format(reg_date,'%Y/%m/%d') regDate, category_no categoryNo from post where category_no = #{categoryNo} limit 1;
 		]]>	
 	</select>
-	<select id="findPostOne" parameterType="long" resultType="postvo">
+	<select id="findPostOne" parameterType="int" resultType="postvo">
 		<![CDATA[
 			select no, title, contents, date_format(reg_date,'%Y/%m/%d') regDate, category_no categoryNo from post where no = #{postNo};
 		]]>	

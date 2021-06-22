@@ -23,7 +23,7 @@ public class PostRepository {
 	}
 
 	public PostVo findPostOne(Long postNo) {
-		return sqlSession.selectOne("post.findPostOne", postNo);
+		return sqlSession.selectOne("post.findPostOne", postNo.intValue());
 	}
 
 	public void addPost(PostVo postVo) {
