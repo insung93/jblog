@@ -21,6 +21,9 @@
 		<![CDATA[
 			insert into category values(null, #{name }, #{desc }, now(), #{blogId })
 		]]>
+		<selectKey resultType="int" keyProperty="no" order="AFTER">
+        	SELECT LAST_INSERT_ID()
+    	</selectKey>       
 	</insert>
 	<select id="findCount" resultType="categoryvo" parameterType="string">
 		<![CDATA[
